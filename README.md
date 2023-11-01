@@ -1,4 +1,4 @@
-# afzaliwp-boilerplate
+# afzaliwp-plaza-core
  Run npm install if cloning the repo.
  
  Run gulp or npx gulp to render assets
