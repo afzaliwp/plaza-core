@@ -22,7 +22,7 @@ class Jalali_Date {
      * @param string $date
      * @return string
      */
-	public function toShaDate( $date = "2015-01-26", $outputLimiter = "/" ) {
+	public function to_sha_date( $date = "2015-01-26", $outputLimiter = "/" ) {
 		$date      = $this->PersianToLatinNumber( $date );
 		$delimiter = substr( $date, 4, 1 );
 		$en_date   = explode( $delimiter, $date );
@@ -38,7 +38,7 @@ class Jalali_Date {
      * @param string $date
      * @return string
      */
-	public function toGrDate( $date = "1393/11/5", $outputLimiter = "/" ) {
+	public function to_gr_date( $date = "1393/11/5", $outputLimiter = "/" ) {
 		$date     = $this->persianToLatinNumber( $date );
 		$exploder = substr( $date, 4, 1 );
 		$fa_date  = explode( $exploder, $date );
@@ -57,7 +57,7 @@ class Jalali_Date {
      *
      * @return string
      */
-	public function getDate( $includeTime = false, $lang = "en", $limiter = "-" ) {
+	public function get_date( $includeTime = false, $lang = "en", $limiter = "-" ) {
 		if ( $lang == "fa" ) {
 			$str = "Y" . $limiter . "n" . $limiter . "j";
 			if ( $includeTime ) {
@@ -82,7 +82,7 @@ class Jalali_Date {
      *
      * @return string
      */
-	public function getMonthName() {
+	public function get_month_name() {
 		return $this->jdate( 'F' );
 	}
 
@@ -91,7 +91,7 @@ class Jalali_Date {
      *
      * @return string
      */
-	public function getSeasonName() {
+	public function get_season_name() {
 		return $this->jdate( 'f' );
 	}
 
@@ -104,7 +104,7 @@ class Jalali_Date {
      * @param string $date
      * @param int flag
      */
-	public function getYearMonthDay( $date = "1393/11/5", $flag = 1 ) {
+	public function get_year_month_day( $date = "1393/11/5", $flag = 1 ) {
 		$limiter = substr( $date, 4, 1 );
 		$date    = explode( $limiter, $date );
 		// Return Year
@@ -128,7 +128,7 @@ class Jalali_Date {
      *
      * @return string
      */
-	public function persianToLatinNumber( $string ) {
+	public function persian_to_latin_number( $string ) {
 		return str_replace( [ '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ], [
 			0,
 			1,
@@ -148,7 +148,7 @@ class Jalali_Date {
      *
      * @return string
      */
-	public function getNowTime() {
+	public function get_now_time() {
 		return date( "H:i:s" );
 	}
 
@@ -157,7 +157,7 @@ class Jalali_Date {
      * @param string $string
      * @return string date
      */
-	public function separateEngDate( $string ) {
+	public function separate_eng_date( $string ) {
 		preg_match( '/\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}/', $string, $matches );
 		if ( isset( $matches[0] ) ) {
 			return $matches[0];
@@ -174,7 +174,7 @@ class Jalali_Date {
      * @param string $outputLimiter
      * @return mixed array consist "date" and "time" indexes
      */
-	public function separateDateAndTime( $DateTime, $convertDate = false, $outputLimiter = "/" ) {
+	public function separate_date_and_time( $DateTime, $convertDate = false, $outputLimiter = "/" ) {
 		$DateTime         = explode( " ", $DateTime );
 		$DateTime['date'] = $DateTime[0];
 		$DateTime['time'] = $DateTime[1];
@@ -193,12 +193,12 @@ class Jalali_Date {
      * This function can detect (automatically) date format and convert to that one format (Sha || Gr)
      *
      */
-	public function convertDate( $date, $outputLimiter = "/" ) {
+	public function convert_date( $date, $outputLimiter = "/" ) {
 		$sub = substr( $date, 0, 1 );
 		if ( $sub == "2" ) {
-			return $this->toShaDate( $date, $outputLimiter );
+			return $this->to_sha_date( $date, $outputLimiter );
 		} elseif ( $sub == "1" ) {
-			return $this->toGrDate( $date, $outputLimiter );
+			return $this->to_gr_date( $date, $outputLimiter );
 		} else {
 			return null;
 		}
@@ -210,9 +210,9 @@ class Jalali_Date {
      * this function only support Y-m-d format
      * if date was empty, current date replace with your date
      */
-	public function editDate( $date = "", $value = "1", $type = "days", $operation = "+" ) {
+	public function edit_date( $date = "", $value = "1", $type = "days", $operation = "+" ) {
 		if ( $date == "" or $date == null ) {
-			$date = $this->getDate();
+			$date = $this->get_date();
 		}
 
 		return date( 'Y-m-d', strtotime( $date . ' ' . $operation . ' ' . $value . ' ' . $type ) );
@@ -698,7 +698,7 @@ class Jalali_Date {
 	}
 
 	/*	F	*/
-	function jgetdate( $timestamp = '', $none = '', $tz = 'Asia/Tehran', $tn = 'en' ) {
+	function j_get_date( $timestamp = '', $none = '', $tz = 'Asia/Tehran', $tn = 'en' ) {
 		$ts    = ( $timestamp == '' ) ? time() : $this->tr_num( $timestamp );
 		$jdate = explode( '_', $this->jdate( 'F_G_i_j_l_n_s_w_Y_z', $ts, '', $tz, $tn ) );
 
