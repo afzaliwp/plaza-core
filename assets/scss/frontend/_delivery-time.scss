@@ -1,0 +1,20 @@
+.time-and-day-container {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+
+	&:not(.show) {
+		display: none;
+	}
+
+	label {
+		margin-bottom: 8px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.time-and-day-container {
+		flex-direction: column;
+		gap: 10px;
+	}
+}

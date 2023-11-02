@@ -10,6 +10,7 @@
 
 namespace AfzaliWP;
 
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
 use Exception;
 
 defined( 'ABSPATH' ) || die();
@@ -26,11 +27,9 @@ final class PlazaDigital {
 		$this->define_constants();
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'register_styles_and_scripts' ], 90 );
-		$this->woocommerce_related();
-		/**
-		 * TODO: Other stuff like method calls or hooks goes here.
-		 */
-		// $this->render_page();
+		add_action( 'init', function () {
+			$this->woocommerce_related();
+		} );
 	}
 
 	protected function __clone() {}
@@ -144,12 +143,7 @@ final class PlazaDigital {
 	}
 
 	public function woocommerce_related() {
-		/**
-		 * TODO: If WooCommerce is icluded in you works, you can create the classes related to WC here.
-		 * Hint:
-		 *        - Just create an instance of the class like new WC_Handler(); and add your needed functionality to the costructor of the class.
-		 *        - Call this method in the constructor.
-		 */
+		new Delivery_Time();
 	}
 
 	public function define_constants() {
