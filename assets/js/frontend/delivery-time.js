@@ -18,6 +18,7 @@ class DeliveryTime {
 		this.elements.billingCity.addEventListener('keyup', this.handleBillingCityChange.bind(this));
 		this.elements.billingCity.addEventListener('blur', this.handleBillingCityChange.bind(this));
 		this.elements.placeOrderButton.addEventListener('click', this.handlePlaceOrderClick.bind(this));
+		this.handleCheckoutLoad();
 	}
 
 	handleBillingCityChange(e) {
@@ -33,15 +34,22 @@ class DeliveryTime {
 	}
 
 	handlePlaceOrderClick(e) {
-		// e.preventDefault();
-
 		if (this.elements.tehranContainer.classList.contains('show') ) {
 			this.elements.outOfTehranContainer.remove();
 		} else {
 			this.elements.tehranContainer.remove();
 		}
+	}
 
-		// e.target.form.submit();
+	handleCheckoutLoad() {
+		const city = this.elements.billingCity.value;
+		if (city === 'تهران' || city === 'تهرا') {
+			this.elements.tehranContainer.classList.add('show');
+			this.elements.outOfTehranContainer.classList.remove('show');
+		} else {
+			this.elements.tehranContainer.classList.remove('show');
+			this.elements.outOfTehranContainer.classList.add('show');
+		}
 	}
 }
 
