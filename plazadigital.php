@@ -11,6 +11,7 @@
 namespace AfzaliWP;
 
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
 use Exception;
 
 defined( 'ABSPATH' ) || die();
@@ -144,6 +145,7 @@ final class PlazaDigital {
 
 	public function woocommerce_related() {
 		new Delivery_Time();
+		new Tracking_Code();
 	}
 
 	public function define_constants() {
