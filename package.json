@@ -1,26 +1,27 @@
 {
-  "name": "itoll-core",
+  "name": "plaza-core",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
+  "sourceType": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/afzaliwp/itoll-core.git"
+    "url": "git+https://github.com/afzaliwp/plaza-core.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/afzaliwp/itoll-core/issues"
+    "url": "https://github.com/afzaliwp/plaza-core/issues"
   },
-  "homepage": "https://github.com/afzaliwp/itoll-core#readme",
+  "homepage": "https://github.com/afzaliwp/plaza-core#readme",
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
-    "@babel/register": "^7.18.9",
+    "@babel/register": "^7.22.15",
     "@babel/traverse": "^7.23.2",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
@@ -39,6 +40,7 @@
     "sass": "^1.57.1"
   },
   "dependencies": {
-    "gulp-zip": "^5.1.0"
+    "gulp-zip": "^5.1.0",
+    "swiper": "^6.8.4"
   }
 }
