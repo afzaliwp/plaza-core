@@ -172,14 +172,12 @@ class Slides extends Widget_Base {
 			<?php endif; ?>
 			<?php if ( $settings[ 'show_arrows' ] ): ?>
                 <div class="swiper-button-next">
-                    <i class="plz-icon chevron-right-white"></i>
-                </div>
-                <div class="swiper-button-prev">
                     <i class="plz-icon chevron-left-white"></i>
                 </div>
+                <div class="swiper-button-prev">
+                    <i class="plz-icon chevron-right-white"></i>
+                </div>
 			<?php endif; ?>
-
-
         </div>
 
 		<?php
