@@ -4,6 +4,8 @@ class DeliveryTime {
 		tehranContainer: '.only-tehran.time-and-day-container',
 		outOfTehranContainer: '.out-of-tehran.time-and-day-container',
 		placeOrderButton: '#place_order',
+		daySelect: '#plaza-day-select',
+		timeSelect: '#plaza-time-select',
 	};
 
 	elements = {
@@ -11,14 +13,35 @@ class DeliveryTime {
 		tehranContainer: document.querySelector(this.selectors.tehranContainer),
 		outOfTehranContainer: document.querySelector(this.selectors.outOfTehranContainer),
 		placeOrderButton: document.querySelector(this.selectors.placeOrderButton),
+		daySelect: document.querySelector(this.selectors.daySelect),
+		timeSelect: document.querySelector(this.selectors.timeSelect),
 	};
+
+	originalTimeOptions = null;
 
 	constructor() {
 		this.elements.billingCity.addEventListener('keydown', this.handleBillingCityChange.bind(this));
 		this.elements.billingCity.addEventListener('keyup', this.handleBillingCityChange.bind(this));
 		this.elements.billingCity.addEventListener('blur', this.handleBillingCityChange.bind(this));
 		this.elements.placeOrderButton.addEventListener('click', this.handlePlaceOrderClick.bind(this));
+		this.elements.daySelect.addEventListener('change', this.handleDaySelectChange.bind(this));
 		this.handleCheckoutLoad();
+	}
+
+	handleDaySelectChange(e) {
+		const day = e.target.value;
+		const firstDayOption = this.elements.daySelect.options[0].value;
+
+		// If the selected day is not the first option, show both time options
+		if (day !== firstDayOption) {
+			this.elements.timeSelect.innerHTML = `
+                <option value="11-15">11 الی 15</option>
+                <option value="15-19">15 الی 19</option>
+            `;
+		} else {
+			// If the selected day is the first option, show the original time options
+			this.elements.timeSelect.innerHTML = this.originalTimeOptions;
+		}
 	}
 
 	handleBillingCityChange(e) {
@@ -50,6 +73,9 @@ class DeliveryTime {
 			this.elements.tehranContainer.classList.remove('show');
 			this.elements.outOfTehranContainer.classList.add('show');
 		}
+
+		// Store the original time options
+		this.originalTimeOptions = this.elements.timeSelect.innerHTML;
 	}
 }
 
