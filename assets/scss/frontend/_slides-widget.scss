@@ -25,12 +25,14 @@
 
 .swiper {
 	overflow: hidden;
+	max-width: 1320px;
 }
 
 .swiper-slide {
 	background-position: center center !important;
 	background-size: contain !important;
 	background-repeat: no-repeat !important;
+	max-width: 1320px;
 
 	img {
 		width: 100%;
