@@ -57,8 +57,8 @@ class Slides extends Widget_Base {
 		$repeater->add_control(
 			'slide_background_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => __( 'Background Color', 'elementor' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide' => 'background-color: {{VALUE}} !important;',
 				],
@@ -167,9 +167,19 @@ class Slides extends Widget_Base {
                     </a>
 				<?php endforeach; ?>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+			<?php if ( $settings[ 'show_pagination' ] ): ?>
+                <div class="swiper-pagination"></div>
+			<?php endif; ?>
+			<?php if ( $settings[ 'show_arrows' ] ): ?>
+                <div class="swiper-button-next">
+                    <i class="plz-icon chevron-right-white"></i>
+                </div>
+                <div class="swiper-button-prev">
+                    <i class="plz-icon chevron-left-white"></i>
+                </div>
+			<?php endif; ?>
+
+
         </div>
 
 		<?php
