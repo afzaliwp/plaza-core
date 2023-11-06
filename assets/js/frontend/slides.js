@@ -1,4 +1,4 @@
-import Swiper, {Autoplay, Navigation, Pagination} from 'swiper';
+import Swiper, { Autoplay, Navigation, Pagination } from 'swiper';
 
 class SlidesWidget {
 	selectors = {
@@ -23,9 +23,7 @@ class SlidesWidget {
 			const delay = item.getAttribute('data-delay');
 			const showArrows = item.getAttribute('data-show-arrows') === 'yes';
 			const showPagination = item.getAttribute('data-show-pagination') === 'yes';
-
-			const nextEl = item.querySelector('.swiper-button-next');
-			const prevEl = item.querySelector('.swiper-button-prev');
+			const swiperModules = [Autoplay];
 
 			const options = {
 				autoplay: {
@@ -38,10 +36,15 @@ class SlidesWidget {
 			};
 
 			if (showArrows) {
+				const nextEl = item.querySelector('.swiper-button-next');
+				const prevEl = item.querySelector('.swiper-button-prev');
+
 				options.navigation = {
 					nextEl: nextEl,
 					prevEl: prevEl,
 				};
+
+				swiperModules.push(Navigation);
 			}
 
 			if (showPagination) {
@@ -49,10 +52,11 @@ class SlidesWidget {
 					el: item.querySelector('.swiper-pagination'),
 					clickable: true,
 				};
+
+				swiperModules.push(Pagination);
 			}
 
-			console.log( options );
-			Swiper.use([Autoplay, Pagination, Navigation]);
+			Swiper.use(swiperModules);
 			new Swiper(item, options);
 		});
 	}
