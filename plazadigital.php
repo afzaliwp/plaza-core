@@ -166,7 +166,7 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '1.0.5' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '1.0.6' );
 		}
 	}
 
