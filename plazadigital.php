@@ -10,6 +10,7 @@
 
 namespace AfzaliWP;
 
+use AfzaliWP\PlazaDigital\Includes\Elementor\Loader;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
 use Exception;
@@ -31,6 +32,7 @@ final class PlazaDigital {
 		add_action( 'init', function () {
 			$this->woocommerce_related();
 		} );
+		$this->elementor_related();
 	}
 
 	protected function __clone() {}
@@ -164,8 +166,12 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '1.0.0' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '1.0.3' );
 		}
+	}
+
+	public function elementor_related() {
+		new Loader();
 	}
 }
 

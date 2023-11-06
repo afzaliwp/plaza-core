@@ -1,2 +1,13 @@
+//Globals
+@import "global-classes";
+@import "icons";
+
+//Elementor widgets
+@import "slides-widget";
+
+//Features
 @import "delivery-time";
 @import "click-copy";
+
+//Node modules
+@import "../../../node_modules/swiper/swiper";
