@@ -13,6 +13,7 @@ namespace AfzaliWP;
 use AfzaliWP\PlazaDigital\Includes\Elementor\Loader;
 use AfzaliWP\PlazaDigital\Includes\Redirects;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
+use AfzaliWP\PlazaDigital\Includes\Third_Parties\Schema;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
 use Exception;
@@ -184,6 +185,7 @@ final class PlazaDigital {
 
 	public function other_functionalities() {
 		new Goftino();
+		new Schema();
 	}
 }
 
