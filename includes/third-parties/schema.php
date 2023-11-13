@@ -15,33 +15,26 @@ class Schema {
 			"@context"        => "https://schema.org/",
 			"@type"           => "Product",
 			"name"            => $product->get_name(),
-			"image"           => wp_get_attachment_url( $product->get_image_id() ),
+			"image"           => array_merge(
+				[ wp_get_attachment_url( $product->get_image_id() ) ],
+				array_map( function ( $image_id ) {
+					return wp_get_attachment_url( $image_id );
+				}, $product->get_gallery_image_ids() )
+			),
 			"description"     => $product->get_description(),
 			"mpn"             => $product->get_sku(),
-			"review"          => [
-				"@type"        => "Review",
-				"reviewRating" => [
-					"@type"       => "Rating",
-					"ratingValue" => $product->get_average_rating(),
-					"bestRating"  => "5",
-				],
-				"author"       => [
-					"@type" => "Person",
-					"name"  => get_the_author_meta( 'display_name', $product->post->post_author ),
-				],
-			],
 			"aggregateRating" => [
 				"@type"       => "AggregateRating",
-				"ratingValue" => $product->get_average_rating(),
-				"reviewCount" => $product->get_review_count(),
+				"ratingValue" => 0 == $product->get_average_rating() ? 5 : $product->get_average_rating(),
+				"reviewCount" => 0 == $product->get_review_count() ? 1 : $product->get_review_count(),
 			],
 			"offers"          => [
 				"@type"           => "Offer",
 				"url"             => get_permalink(),
-				"priceCurrency"   => get_woocommerce_currency(),
-				"price"           => $product->get_price(),
+				"priceCurrency"   => 'IRR',
+				"price"           => intval( $product->get_price() ) * 10,
 				"priceValidUntil" => date( 'Y-m-d', strtotime( '+1 day' ) ),
-				"itemCondition"   => "https://schema.org/Product",
+				"itemCondition"   => "https://schema.org/NewCondition",
 				"availability"    => $product->is_in_stock() ? "In Stock" : "Out of Stock",
 			],
 		];
