@@ -202,9 +202,9 @@ class Delivery_Time {
 
 		$times = [];
 
-		if ( $hour < 13 || ( $hour === 13 && $minute === 0 ) ) {
-			$times[ '11-15' ] = '11 الی 15';
-		}
+//		if ( $hour < 13 || ( $hour === 13 && $minute === 0 ) ) {
+//			$times[ '11-15' ] = '11 الی 15';
+//		}
 
 		if ( $hour < 16 || ( $hour === 16 && $minute === 0 ) ) {
 			$times[ '15-19' ] = '15 الی 19';
