@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           1.1.0
+ * Version:           1.1.3
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
