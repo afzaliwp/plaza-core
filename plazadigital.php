@@ -12,6 +12,7 @@ namespace AfzaliWP;
 
 use AfzaliWP\PlazaDigital\Includes\Elementor\Loader;
 use AfzaliWP\PlazaDigital\Includes\Redirects;
+use AfzaliWP\PlazaDigital\Includes\SEO\Canonical;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Schema;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
@@ -188,6 +189,7 @@ final class PlazaDigital {
 		new Goftino();
 		new Schema();
 		new Shipping_Price();
+		new Canonical();
 	}
 }
 
