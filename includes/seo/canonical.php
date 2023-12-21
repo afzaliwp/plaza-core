@@ -6,14 +6,14 @@ defined( 'ABSPATH' ) || die();
 
 class Canonical {
 	public function __construct() {
-		add_action( 'wp_head', [ 'set_canonical_url_paged_urls' ] );
+		add_filter( 'rank_math/frontend/canonical', [ $this, 'set_canonical_url_paged_urls' ], 1, 1 );
 	}
 
-	public function set_canonical_url_paged_urls() {
+	public function set_canonical_url_paged_urls( $canonical ) {
 		if ( is_paged() ) {
-			$url = get_pagenum_link( 1 );
-			preg_replace( '#/page/[0-9]+/?$#', '/', $url );
-			echo '<link rel="canonical" href="' . esc_url( $url ) . '" />';
+			return preg_replace( '#/page/[0-9]+/?$#', '/', $canonical );
 		}
+
+		return $canonical;
 	}
 }
