@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           1.1.0
+ * Version:           1.1.7
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
@@ -12,6 +12,7 @@ namespace AfzaliWP;
 
 use AfzaliWP\PlazaDigital\Includes\Elementor\Loader;
 use AfzaliWP\PlazaDigital\Includes\Redirects;
+use AfzaliWP\PlazaDigital\Includes\SEO\Canonical;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Schema;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
@@ -188,6 +189,7 @@ final class PlazaDigital {
 		new Goftino();
 		new Schema();
 		new Shipping_Price();
+		new Canonical();
 	}
 }
 
