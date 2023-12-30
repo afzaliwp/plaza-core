@@ -18,14 +18,14 @@ class Delivery_Time {
 		add_filter( 'woocommerce_admin_order_preview_get_order_details', [
 			$this,
 			'display_delivery_time_in_preview',
-		],          99, 2 );
+		], 99, 2 );
 		add_action( 'woocommerce_checkout_update_order_meta', [ $this, 'save_delivery_time_to_order_meta' ] );
 
 		$this->jdate = new Jalali_Date();
 	}
 
 	public function render() {
-		$user_id              = get_current_user_id();
+		$user_id = get_current_user_id();
 		$default_billing_city = get_user_meta( $user_id, 'billing_city', true ); // Get default billing city
 
 		?>
@@ -93,12 +93,23 @@ class Delivery_Time {
 			$today_times = $this->get_tehran_delivery_times( true );
 		}
 
+		$today_is_friday = $today->format( 'w' ) == 5;
+		if ( $today_is_friday ) {
+			$today->add( new DateInterval( 'P1D' ) );
+		}
+
 		// Create a new DateTime object for tomorrow
 		$tomorrow = clone $today;
 		$tomorrow->add( new DateInterval( 'P1D' ) );
+		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
+
+		// If tomorrow is Friday (Jomeh), go to next day
+		if ( $tomorrow_is_friday ) {
+			$tomorrow->add( new DateInterval( 'P1D' ) );
+		}
 
 		// Convert to Shamsi date
-		$today_shamsi    = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
 		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
 
 		return [ [ $today_times ], [ $today_shamsi, $tomorrow_shamsi ] ];
@@ -107,13 +118,13 @@ class Delivery_Time {
 	private function get_out_tehran_delivery_days() {
 		// Get current time in Tehran
 		$tehran_time = new DateTime( 'now', new DateTimeZone( 'Asia/Tehran' ) );
-		$hour        = $tehran_time->format( 'H' );
+		$hour = $tehran_time->format( 'H' );
 
-		$today    = new DateTime();
+		$today = new DateTime();
 		$tomorrow = new DateTime();
 		$tomorrow->add( new DateInterval( 'P1D' ) );
 
-		$today_is_friday    = $today->format( 'w' ) == 5;
+		$today_is_friday = $today->format( 'w' ) == 5;
 		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
 
 		$skip_today = false;
@@ -130,16 +141,16 @@ class Delivery_Time {
 		}
 
 		// Convert to Shamsi date and get day of week
-		$today_shamsi    = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
 		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
 
 		// Prepare delivery options
 		$options = [];
-		if ( ! $skip_today ) {
+		if ( !$skip_today ) {
 			$options[] = 'ارسال امروز - ' . $today_shamsi;
 		}
 
-		if ( ! $tomorrow_is_friday ) {
+		if ( !$tomorrow_is_friday ) {
 			$options[] = 'ارسال فردا - ' . $tomorrow_shamsi;
 		} else {
 			$options[] = 'ارسال ' . $tomorrow_shamsi;
@@ -149,7 +160,7 @@ class Delivery_Time {
 	}
 
 	public function display_delivery_time_in_admin( $order ) {
-		$delivery_day  = get_post_meta( $order->get_id(), 'delivery_day', true );
+		$delivery_day = get_post_meta( $order->get_id(), 'delivery_day', true );
 		$delivery_time = get_post_meta( $order->get_id(), 'delivery_time', true );
 
 		if ( $delivery_day ) {
@@ -162,7 +173,7 @@ class Delivery_Time {
 	}
 
 	public function display_delivery_time_in_preview( $data, $order ) {
-		$delivery_day  = get_post_meta( $order->get_id(), 'delivery_day', true );
+		$delivery_day = get_post_meta( $order->get_id(), 'delivery_day', true );
 		$delivery_time = get_post_meta( $order->get_id(), 'delivery_time', true );
 
 		if ( $delivery_day ) {
@@ -177,11 +188,11 @@ class Delivery_Time {
 	}
 
 	public function save_delivery_time_to_order_meta( $order_id ) {
-		if ( ! empty( $_POST[ 'plaza-day-select' ] ) ) {
+		if ( !empty( $_POST[ 'plaza-day-select' ] ) ) {
 			update_post_meta( $order_id, 'delivery_day', sanitize_text_field( $_POST[ 'plaza-day-select' ] ) );
 		}
 
-		if ( ! empty( $_POST[ 'plaza-time-select' ] ) ) {
+		if ( !empty( $_POST[ 'plaza-time-select' ] ) ) {
 			update_post_meta( $order_id, 'delivery_time', sanitize_text_field( $_POST[ 'plaza-time-select' ] ) );
 		}
 	}
@@ -197,8 +208,8 @@ class Delivery_Time {
 
 		// Get current time in Tehran
 		$tehran_time = new DateTime( 'now', new DateTimeZone( 'Asia/Tehran' ) );
-		$hour        = (int) $tehran_time->format( 'H' );
-		$minute      = (int) $tehran_time->format( 'i' );
+		$hour = (int) $tehran_time->format( 'H' );
+		$minute = (int) $tehran_time->format( 'i' );
 
 		$times = [];
 
