@@ -183,12 +183,12 @@ final class PlazaDigital {
 
 	public function init_hook() {
 		new Redirects();
+		new Shipping_Price();
 	}
 
 	public function other_functionalities() {
 		new Goftino();
 		new Schema();
-		new Shipping_Price();
 		new Canonical();
 	}
 }
