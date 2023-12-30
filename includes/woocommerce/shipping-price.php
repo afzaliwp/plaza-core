@@ -5,8 +5,9 @@ defined( 'ABSPATH' ) || die();
 
 class Shipping_Price {
 	public function __construct() {
-		update_option( '_transient_shipping-transient-version', current_time( 'timestamp' ) );
-		add_filter( 'woocommerce_shipping_rate_transient_lifetime', [ $this, 'disable_shipping_rate_cache' ], 20, 1 );
+		$current_timestamp = current_time( 'timestamp' );
+		update_option( '_transient_shipping-transient-version', $current_timestamp );
+		update_option( '_transient_timeout_wc_shipping_method_count', $current_timestamp );
 		add_filter( 'woocommerce_package_rates', [ $this, 'modify_shipping_methods' ], 99, 2 );
 	}
 
