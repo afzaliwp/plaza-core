@@ -22,14 +22,14 @@ class Shipping_Price {
 		$cart_total = $woocommerce->cart->get_cart_contents_total();
 		$product_categories = [ 'printer', 'monitor', 'all-in-one', 'assembled-cases' ];
 
-//		foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
-//			$_product = $values[ 'data' ];
-//			$terms = get_the_terms( $_product->id, 'product_cat' );
-//
-//			foreach ( $terms as $term ) {
-//				$cart_product_categories[] = $term->slug;
-//			}
-//		}
+		foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
+			$_product = $values[ 'data' ];
+			$terms = get_the_terms( $_product->id, 'product_cat' );
+
+			foreach ( $terms as $term ) {
+				$cart_product_categories[] = $term->slug;
+			}
+		}
 
 		$intersection = array_intersect( array_unique( $cart_product_categories ), $product_categories );
 
