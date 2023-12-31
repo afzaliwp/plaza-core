@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 build_job:
   stage: build
@@ -10,3 +11,11 @@ build_job:
   artifacts:
     paths:
       - release/plaza-core
+
+deploy_job:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache lftp
+  script:
+    - lftp -c "set ftp:ssl-allow no; open -u gitlab@newsite.plazadigital.ir,5!bgPq7gTntA ftp.newsite.plazadigital.ir; mirror -Rnev ./release/plaza-core ./my-newsite-deploy-test --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
