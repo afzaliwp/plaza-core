@@ -7,6 +7,3 @@ build_job:
   script:
     - npm install
     - npx gulp
-  artifacts:
-    paths:
-      - dist/
