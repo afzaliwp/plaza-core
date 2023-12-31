@@ -6,7 +6,7 @@ build_job:
   image: node:latest
   script:
     - npm install
-    - npx gulp
+    - npx gulp --gitLabBuild
   artifacts:
     paths:
-      - builds/
+      - dist
