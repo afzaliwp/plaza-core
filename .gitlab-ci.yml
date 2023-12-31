@@ -6,7 +6,7 @@ build_job:
   image: node:latest
   script:
     - npm install
-    - npx gulp --gitLabBuild
+    - npx gulp gitLabBuild
   artifacts:
     paths:
-      - dist
+      - release/plaza-core
