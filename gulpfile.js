@@ -161,4 +161,15 @@ const build = gulp.series(
     releaseZip
 );
 
+export const gitLabBuild = gulp.series(
+    clean,
+    gulp.parallel(
+        styles,
+        scripts,
+        adminStyles,
+        adminScripts
+    ),
+    release
+);
+
 export default build;
