@@ -12,10 +12,22 @@ build_job:
     paths:
       - release/plaza-core
 
-deploy_job:
+deploy_job_main:
   stage: deploy
   image: alpine:latest
   before_script:
     - apk add --no-cache lftp
   script:
-    - lftp -c "set ftp:ssl-allow no; open -u gitlab@newsite.plazadigital.ir,5!bgPq7gTntA ftp.newsite.plazadigital.ir; mirror -Rnev ./release/plaza-core ./my-newsite-deploy-test --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u main_ftp_username,main_ftp_password main_ftp_host; mirror -Rnev ./release/plaza-core ./path/on/main/server --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+  only:
+    - main
+
+deploy_job_develop:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache lftp
+  script:
+    - lftp -c "set ftp:ssl-allow no; open -u develop_ftp_username,develop_ftp_password develop_ftp_host; mirror -Rnev ./release/plaza-core ./path/on/develop/server --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+  only:
+    - develop
