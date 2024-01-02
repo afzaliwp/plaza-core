@@ -18,7 +18,7 @@ deploy_job_main:
   before_script:
     - apk add --no-cache lftp
   script:
-    - lftp -c "set ftp:ssl-allow no; open -u $MAIN_FTP_USERNAME,$MAIN_FTP_PASSWORD $MAIN_FTP_HOST; mirror -Rnev ./release/plaza-core ./path/on/main/server --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u $PLAZA_NEWSITE_FTP_USERNAME,$PLAZA_NEWSITE_FTP_PASSWORD $PLAZA_NEWSITE_FTP_HOST; mirror -Rnev ./release/plaza-core ./test-deploy-here --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
   only:
     - main
 
@@ -28,6 +28,6 @@ deploy_job_develop:
   before_script:
     - apk add --no-cache lftp
   script:
-    - lftp -c "set ftp:ssl-allow no; open -u $DEVELOP_FTP_USERNAME,$DEVELOP_FTP_PASSWORD $DEVELOP_FTP_HOST; mirror -Rnev ./release/plaza-core ./path/on/develop/server --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u $PLAZA_NEWSITE_FTP_USERNAME,$PLAZA_NEWSITE_FTP_PASSWORD $PLAZA_NEWSITE_FTP_HOST; mirror -Rnev ./release/plaza-core ./test-deploy-here --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
   only:
     - develop
