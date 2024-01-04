@@ -15,6 +15,7 @@ use AfzaliWP\PlazaDigital\Includes\Redirects;
 use AfzaliWP\PlazaDigital\Includes\SEO\Canonical;
 use AfzaliWP\PlazaDigital\Includes\SEO\Schema;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Shipping_Price;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
@@ -184,6 +185,7 @@ final class PlazaDigital {
 	public function init_hook() {
 		new Redirects();
 		new Shipping_Price();
+		new Checkout();
 	}
 
 	public function other_functionalities() {
