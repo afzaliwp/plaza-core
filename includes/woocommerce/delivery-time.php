@@ -29,7 +29,7 @@ class Delivery_Time {
 		$default_billing_city = get_user_meta( $user_id, 'billing_city', true ); // Get default billing city
 
 		?>
-        <div id="cart-delivery-time-plaza" class="card border p-4 mb-4 mt-4">
+        <div id="cart-delivery-time-plaza" class="plz-card p-4 mb-4 mt-4">
             <h4 class="panel-title text-primary fsz-16 d-flex align-items-center justify-content-between">زمان ارسال
                 کالا </h4>
             <div class="content">

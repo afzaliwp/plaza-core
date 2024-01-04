@@ -1,3 +1,5 @@
+const $ = jQuery;
+
 class DeliveryTime {
 	selectors = {
 		billingCity: '#billing_city',
@@ -9,31 +11,32 @@ class DeliveryTime {
 	};
 
 	elements = {
-		billingCity: document.querySelector(this.selectors.billingCity),
-		tehranContainer: document.querySelector(this.selectors.tehranContainer),
-		outOfTehranContainer: document.querySelector(this.selectors.outOfTehranContainer),
-		placeOrderButton: document.querySelector(this.selectors.placeOrderButton),
-		daySelect: document.querySelector(this.selectors.daySelect),
-		timeSelect: document.querySelector(this.selectors.timeSelect),
+		billingCity: document.querySelector( this.selectors.billingCity ),
+		tehranContainer: document.querySelector( this.selectors.tehranContainer ),
+		outOfTehranContainer: document.querySelector( this.selectors.outOfTehranContainer ),
+		placeOrderButton: document.querySelector( this.selectors.placeOrderButton ),
+		daySelect: document.querySelector( this.selectors.daySelect ),
+		timeSelect: document.querySelector( this.selectors.timeSelect ),
 	};
 
 	originalTimeOptions = null;
 
 	constructor() {
-		this.elements.billingCity.addEventListener('keydown', this.handleBillingCityChange.bind(this));
-		this.elements.billingCity.addEventListener('keyup', this.handleBillingCityChange.bind(this));
-		this.elements.billingCity.addEventListener('blur', this.handleBillingCityChange.bind(this));
-		this.elements.placeOrderButton.addEventListener('click', this.handlePlaceOrderClick.bind(this));
-		this.elements.daySelect.addEventListener('change', this.handleDaySelectChange.bind(this));
+		// this.elements.billingCity.addEventListener( 'keydown', this.handleBillingCityChange.bind( this ) );
+		// this.elements.billingCity.addEventListener( 'keyup', this.handleBillingCityChange.bind( this ) );
+		// this.elements.billingCity.addEventListener( 'blur', this.handleBillingCityChange.bind( this ) );
+		$(this.elements.billingCity).on('change', this.handleBillingCityChange .bind( this ));
+		this.elements.placeOrderButton.addEventListener( 'click', this.handlePlaceOrderClick.bind( this ) );
+		this.elements.daySelect.addEventListener( 'change', this.handleDaySelectChange.bind( this ) );
 		this.handleCheckoutLoad();
 	}
 
-	handleDaySelectChange(e) {
+	handleDaySelectChange( e ) {
 		const day = e.target.value;
-		const firstDayOption = this.elements.daySelect.options[0].value;
+		const firstDayOption = this.elements.daySelect.options[ 0 ].value;
 
 		// If the selected day is not the first option, show both time options
-		if (day !== firstDayOption) {
+		if ( day !== firstDayOption ) {
 			this.elements.timeSelect.innerHTML = `
                 <option value="11-15">11 الی 15</option>
                 <option value="15-19">15 الی 19</option>
@@ -44,20 +47,24 @@ class DeliveryTime {
 		}
 	}
 
-	handleBillingCityChange(e) {
-		const cityName = e.target.value;
+	handleBillingCityChange( e ) {
+		const selectedOption = e.target.selectedOptions[0],
+			cityName = selectedOption.text,
+			self = this;
 
-		if (cityName === 'تهران' || cityName === 'تهرا') {
-			this.elements.tehranContainer.classList.add('show');
-			this.elements.outOfTehranContainer.classList.remove('show');
+		if ( cityName === 'تهران' ) {
+			console.log(self.elements)
+			self.elements.tehranContainer.classList.add( 'show' );
+			self.elements.outOfTehranContainer.classList.remove( 'show' );
 		} else {
-			this.elements.tehranContainer.classList.remove('show');
-			this.elements.outOfTehranContainer.classList.add('show');
+			console.log(self.elements)
+			self.elements.tehranContainer.classList.remove( 'show' );
+			self.elements.outOfTehranContainer.classList.add( 'show' );
 		}
 	}
 
-	handlePlaceOrderClick(e) {
-		if (this.elements.tehranContainer.classList.contains('show') ) {
+	handlePlaceOrderClick( e ) {
+		if ( this.elements.tehranContainer.classList.contains( 'show' ) ) {
 			this.elements.outOfTehranContainer.remove();
 		} else {
 			this.elements.tehranContainer.remove();
@@ -66,12 +73,12 @@ class DeliveryTime {
 
 	handleCheckoutLoad() {
 		const city = this.elements.billingCity.value;
-		if (city === 'تهران' || city === 'تهرا') {
-			this.elements.tehranContainer.classList.add('show');
-			this.elements.outOfTehranContainer.classList.remove('show');
+		if ( city === 'تهران' || city === 'تهرا' ) {
+			this.elements.tehranContainer.classList.add( 'show' );
+			this.elements.outOfTehranContainer.classList.remove( 'show' );
 		} else {
-			this.elements.tehranContainer.classList.remove('show');
-			this.elements.outOfTehranContainer.classList.add('show');
+			this.elements.tehranContainer.classList.remove( 'show' );
+			this.elements.outOfTehranContainer.classList.add( 'show' );
 		}
 
 		// Store the original time options
@@ -79,6 +86,6 @@ class DeliveryTime {
 	}
 }
 
-if (document.querySelector('form.woocommerce-checkout')) {
+if ( document.querySelector( 'form.woocommerce-checkout' ) ) {
 	new DeliveryTime();
 }
