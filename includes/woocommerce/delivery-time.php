@@ -36,7 +36,7 @@ class Delivery_Time {
                 <div class="only-tehran time-and-day-container <?php echo 'تهران' === $default_billing_city || 'تهرا' === $default_billing_city ? 'show' : '' ?>">
                     <div class="w-100">
                         <label for="plaza-day-select">روز ارسال</label>
-                        <select class="form-control" aria-label="انتخاب روز ارسال" name="plaza-day-select"
+                        <select class="form-select" aria-label="انتخاب روز ارسال" name="plaza-day-select"
                                 id="plaza-day-select">
 							<?php
 							$tehran_days = $this->get_tehran_delivery_days();
@@ -48,7 +48,7 @@ class Delivery_Time {
                     </div>
                     <div class="w-100">
                         <label for="plaza-time-select">ساعت ارسال</label>
-                        <select class="form-control" aria-label="انتخاب ساعت ارسال" name="plaza-time-select"
+                        <select class="form-select" aria-label="انتخاب ساعت ارسال" name="plaza-time-select"
                                 id="plaza-time-select">
 							<?php
 							$tehran_times = $this->get_tehran_delivery_times();
