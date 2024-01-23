@@ -4,7 +4,7 @@ class ContentTable {
 
 	selectors = {
 		contentTableWrapper: '.content-table-wrapper',
-		content: '.single-post .contentstyle',
+		content: '.contentstyle',
 		headings: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 	};
 
@@ -26,7 +26,7 @@ class ContentTable {
 
 	handleTableContent() {
 		const headings = this.elements.content.querySelectorAll(this.selectors.headings.join(','));
-		let tocHTML = '<p>فهرست مطالب</p><ul>';
+		let tocHTML = '<p class="content-table-title">فهرست مطالب</p><ul>';
 
 		headings.forEach((heading, index) => {
 			const headingId = 'toc-' + (index + 1);

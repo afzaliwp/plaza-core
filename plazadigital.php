@@ -35,6 +35,8 @@ final class PlazaDigital {
 		$this->define_constants();
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'register_styles_and_scripts' ], 90 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'register_admin_styles_and_scripts' ], 90 );
+
 		add_action( 'init', function () {
 			$this->init_hook();
 			$this->woocommerce_related();
