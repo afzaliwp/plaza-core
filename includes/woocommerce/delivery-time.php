@@ -29,14 +29,13 @@ class Delivery_Time {
 		$default_billing_city = get_user_meta( $user_id, 'billing_city', true ); // Get default billing city
 
 		?>
-        <div id="cart-delivery-time-plaza" class="plz-card p-4 mb-4 mt-4">
-            <h4 class="panel-title text-primary fsz-16 d-flex align-items-center justify-content-between">زمان ارسال
-                کالا </h4>
+        <div id="cart-delivery-time-plaza" class="plz-card my-4">
+            <p class="checkout-fields-title mb-3">زمان ارسال کالا</p>
             <div class="content">
                 <div class="only-tehran time-and-day-container <?php echo 'تهران' === $default_billing_city || 'تهرا' === $default_billing_city ? 'show' : '' ?>">
                     <div class="w-100">
                         <label for="plaza-day-select">روز ارسال</label>
-                        <select class="form-select" aria-label="انتخاب روز ارسال" name="plaza-day-select"
+                        <select class="form-select w-100" aria-label="انتخاب روز ارسال" name="plaza-day-select"
                                 id="plaza-day-select">
 							<?php
 							$tehran_days = $this->get_tehran_delivery_days();
@@ -48,7 +47,7 @@ class Delivery_Time {
                     </div>
                     <div class="w-100">
                         <label for="plaza-time-select">ساعت ارسال</label>
-                        <select class="form-select" aria-label="انتخاب ساعت ارسال" name="plaza-time-select"
+                        <select class="form-select w-100" aria-label="انتخاب ساعت ارسال" name="plaza-time-select"
                                 id="plaza-time-select">
 							<?php
 							$tehran_times = $this->get_tehran_delivery_times();
@@ -65,7 +64,7 @@ class Delivery_Time {
                 <div class="out-of-tehran time-and-day-container <?php echo 'تهران' !== $default_billing_city || 'تهرا' !== $default_billing_city ? 'show' : '' ?>">
                     <div class="w-100">
                         <label for="plaza-day-select">روز ارسال</label>
-                        <select class="form-control" aria-label="انتخاب روز ارسال" name="plaza-day-select"
+                        <select class="form-select w-100" aria-label="انتخاب روز ارسال" name="plaza-day-select"
                                 id="plaza-day-select">
 							<?php
 							foreach ( $this->get_out_tehran_delivery_days() as $day ) {

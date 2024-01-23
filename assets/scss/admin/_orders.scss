@@ -1,0 +1,9 @@
+.post-type-shop_order, .woocommerce_page_wc-orders {
+    .wp-list-table {
+        .wp-locked {
+            .order-preview {
+                visibility: visible !important;
+            }
+        }
+    }
+}

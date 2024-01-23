@@ -48,18 +48,19 @@ class DeliveryTime {
 	}
 
 	handleBillingCityChange( e ) {
-		const selectedOption = e.target.selectedOptions[0],
-			cityName = selectedOption.text,
-			self = this;
+		const selectedOption = e.target.selectedOptions[0];
+		if ( ! selectedOption ) {
+			return;
+		}
+
+		const cityName = selectedOption.text;
 
 		if ( cityName === 'تهران' ) {
-			console.log(self.elements)
-			self.elements.tehranContainer.classList.add( 'show' );
-			self.elements.outOfTehranContainer.classList.remove( 'show' );
+			this.elements.tehranContainer.classList.add( 'show' );
+			this.elements.outOfTehranContainer.classList.remove( 'show' );
 		} else {
-			console.log(self.elements)
-			self.elements.tehranContainer.classList.remove( 'show' );
-			self.elements.outOfTehranContainer.classList.add( 'show' );
+			this.elements.tehranContainer.classList.remove( 'show' );
+			this.elements.outOfTehranContainer.classList.add( 'show' );
 		}
 	}
 
