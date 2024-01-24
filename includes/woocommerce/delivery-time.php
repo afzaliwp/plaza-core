@@ -200,8 +200,8 @@ class Delivery_Time {
 		// If reset is true, return all time options
 		if ( $reset ) {
 			return [
-				'11-15' => '11 الی 15',
-				'15-19' => '15 الی 19',
+				'12-16' => '۱۲ الی ۱۶',
+				'16-20' => '۱۶ الی ۲۰',
 			];
 		}
 
@@ -217,7 +217,7 @@ class Delivery_Time {
 //		}
 
 		if ( $hour < 16 || ( $hour === 16 && $minute === 0 ) ) {
-			$times[ '15-19' ] = '15 الی 19';
+			$times[ '16-20' ] = '۱۶ الی ۲۰';
 		}
 
 		return $times;
