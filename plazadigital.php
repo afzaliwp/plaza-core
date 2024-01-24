@@ -41,7 +41,6 @@ final class PlazaDigital {
 			$this->init_hook();
 			$this->woocommerce_related();
 		} );
-		$this->elementor_related();
 		$this->other_functionalities();
 	}
 
@@ -178,10 +177,6 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
 			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.0.2' );
 		}
-	}
-
-	public function elementor_related() {
-		new Loader();
 	}
 
 	public function init_hook() {
