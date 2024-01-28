@@ -121,11 +121,7 @@ class Delivery_Time {
 			$today = $this->get_next_valid_day( $today );
 			// Reset the time options for the new day
 			$today_times = $this->get_tehran_delivery_times( true );
-		} else {
-			$today = $this->get_next_valid_day( $today );
 		}
-
-		$tomorrow = $this->get_next_valid_day( $tomorrow );
 
 		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
 		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
