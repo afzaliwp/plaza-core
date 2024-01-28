@@ -182,68 +182,6 @@ class Delivery_Time {
 		return false;
 	}
 
-//	private function get_out_tehran_delivery_days() {
-//		// Get current time in Tehran
-//		$tehran_time = new DateTime( 'now', new DateTimeZone( 'Asia/Tehran' ) );
-//		$hour = $tehran_time->format( 'H' );
-//
-//		$today = new DateTime();
-//		$tomorrow = new DateTime();
-//		$tomorrow->add( new DateInterval( 'P1D' ) );
-//
-//		$today_is_friday = $today->format( 'w' ) == 5;
-//		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
-//		$skip_tomorrow = false;
-//
-//		$skip_today = false;
-//		// If current hour is past 15 or today is Friday (Jomeh), go to next day
-//		if ( $hour >= 15 || $today_is_friday ) {
-//			$today->add( new DateInterval( 'P1D' ) );
-//			// Skip today's delivery option
-//			$skip_today = true;
-//		}
-//
-//		// If tomorrow is Friday (Jomeh), go to next day
-//		if ( $tomorrow_is_friday ) {
-//			$tomorrow->add( new DateInterval( 'P1D' ) );
-//		}
-//
-//		// Convert to Shamsi date and get day of week
-//		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
-//		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
-//
-//		$is_today_excluded = $this->is_excluded( $today_shamsi );
-//		while ( $is_today_excluded ) {
-//			$skip_today = true;
-//			$today->add( new DateInterval( 'P1D' ) );
-//			$is_today_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $today->getTimestamp() ) );
-//		}
-//
-//		$is_tomorrow_excluded = $this->is_excluded( $tomorrow_shamsi );
-//		while ( $is_tomorrow_excluded ) {
-//			$skip_tomorrow = true;
-//			$tomorrow->add( new DateInterval( 'P1D' ) );
-//			$is_tomorrow_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() ) );
-//		}
-//
-//		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
-//		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
-//
-//		// Prepare delivery options
-//		$options = [];
-//		if ( !$skip_today ) {
-//			$options[] = 'ارسال امروز - ' . $today_shamsi;
-//		}
-//
-//		if ( !$tomorrow_is_friday && !$skip_tomorrow ) {
-//			$options[] = 'ارسال فردا - ' . $tomorrow_shamsi;
-//		} else {
-//			$options[] = 'ارسال ' . $tomorrow_shamsi;
-//		}
-//
-//		return $options;
-//	}
-
 	public function display_delivery_time_in_admin( $order ) {
 		$delivery_day = get_post_meta( $order->get_id(), 'delivery_day', true );
 		$delivery_time = get_post_meta( $order->get_id(), 'delivery_time', true );
@@ -286,8 +224,8 @@ class Delivery_Time {
 		// If reset is true, return all time options
 		if ( $reset ) {
 			return [
-				'12-16' => '۱۲ الی ۱۶',
-				'16-20' => '۱۶ الی ۲۰',
+				'12-17' => '۱۲ الی ۱۷',
+				'17-20' => '۱۷ الی ۲۰',
 			];
 		}
 
@@ -298,12 +236,12 @@ class Delivery_Time {
 
 		$times = [];
 
-		if ( $hour < 10 || ( $hour === 10 && $minute === 0 ) ) {
-			$times[ '11-15' ] = '11 الی 15';
+		if ( $hour < 11 || ( $hour === 11 && $minute === 0 ) ) {
+			$times[ '12-17' ] = '۱۲ الی ۱۷';
 		}
 
 		if ( $hour < 15 || ( $hour === 15 && $minute === 0 ) ) {
-			$times[ '16-20' ] = '۱۶ الی ۲۰';
+			$times[ '17-20' ] = '۱۷ الی ۲۰';
 		}
 
 		return $times;

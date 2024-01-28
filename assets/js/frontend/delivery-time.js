@@ -38,8 +38,8 @@ class DeliveryTime {
 		// If the selected day is not the first option, show both time options
 		if ( day !== firstDayOption ) {
 			this.elements.timeSelect.innerHTML = `
-                <option value="12-16">۱۲ الی ۱۶</option>
-                <option value="16-20">۱۶ الی ۲۰</option>
+                <option value="12-17">۱۲ الی ۱۷</option>
+                <option value="17-20">۱۷ الی ۲۰</option>
             `;
 		} else {
 			// If the selected day is the first option, show the original time options
