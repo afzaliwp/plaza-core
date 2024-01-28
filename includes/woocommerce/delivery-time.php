@@ -12,6 +12,11 @@ defined( 'ABSPATH' ) || die();
 class Delivery_Time {
 	private $jdate;
 
+	private $exclude_delivery_days = [
+		'بهمن' => [ '۱۹', '۲۲' ],
+		'اسفند' => [ '۶', '۲۹' ],
+	];
+
 	public function __construct() {
 		add_action( 'woocommerce_checkout_after_customer_details', [ $this, 'render' ] );
 		add_action( 'woocommerce_admin_order_data_after_billing_address', [ $this, 'display_delivery_time_in_admin' ] );
@@ -79,43 +84,7 @@ class Delivery_Time {
 		<?php
 	}
 
-	private function get_tehran_delivery_days() {
-		$today = new DateTime();
-
-		// Get the time options for today
-		$today_times = $this->get_tehran_delivery_times();
-
-		// If there are no time options left for today, skip to the next day
-		if ( empty( $today_times ) ) {
-			$today->add( new DateInterval( 'P1D' ) );
-			// Reset the time options for the new day
-			$today_times = $this->get_tehran_delivery_times( true );
-		}
-
-		$today_is_friday = $today->format( 'w' ) == 5;
-		if ( $today_is_friday ) {
-			$today->add( new DateInterval( 'P1D' ) );
-		}
-
-		// Create a new DateTime object for tomorrow
-		$tomorrow = clone $today;
-		$tomorrow->add( new DateInterval( 'P1D' ) );
-		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
-
-		// If tomorrow is Friday (Jomeh), go to next day
-		if ( $tomorrow_is_friday ) {
-			$tomorrow->add( new DateInterval( 'P1D' ) );
-		}
-
-		// Convert to Shamsi date
-		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
-		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
-
-		return [ [ $today_times ], [ $today_shamsi, $tomorrow_shamsi ] ];
-	}
-
 	private function get_out_tehran_delivery_days() {
-		// Get current time in Tehran
 		$tehran_time = new DateTime( 'now', new DateTimeZone( 'Asia/Tehran' ) );
 		$hour = $tehran_time->format( 'H' );
 
@@ -123,40 +92,157 @@ class Delivery_Time {
 		$tomorrow = new DateTime();
 		$tomorrow->add( new DateInterval( 'P1D' ) );
 
-		$today_is_friday = $today->format( 'w' ) == 5;
-		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
+		$skip_today = $this->should_skip_day( $today, $hour );
+		$skip_tomorrow = $this->should_skip_day( $tomorrow );
 
-		$skip_today = false;
-		// If current hour is past 15 or today is Friday (Jomeh), go to next day
-		if ( $hour >= 15 || $today_is_friday ) {
-			$today->add( new DateInterval( 'P1D' ) );
-			// Skip today's delivery option
-			$skip_today = true;
-		}
-
-		// If tomorrow is Friday (Jomeh), go to next day
-		if ( $tomorrow_is_friday ) {
-			$tomorrow->add( new DateInterval( 'P1D' ) );
-		}
-
-		// Convert to Shamsi date and get day of week
-		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
-		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
-
-		// Prepare delivery options
 		$options = [];
 		if ( !$skip_today ) {
-			$options[] = 'ارسال امروز - ' . $today_shamsi;
+			$options[] = 'ارسال امروز - ' . $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
 		}
 
-		if ( !$tomorrow_is_friday ) {
-			$options[] = 'ارسال فردا - ' . $tomorrow_shamsi;
-		} else {
-			$options[] = 'ارسال ' . $tomorrow_shamsi;
+		if ( !$skip_tomorrow ) {
+			$options[] = 'ارسال فردا - ' . $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
 		}
 
 		return $options;
 	}
+
+
+	private function get_tehran_delivery_days() {
+		$today = new DateTime();
+		$tomorrow = clone $today;
+		$tomorrow->add( new DateInterval( 'P1D' ) );
+
+		// Get the time options for today
+		$today_times = $this->get_tehran_delivery_times();
+
+		// If there are no time options left for today, skip to the next day
+		if ( empty( $today_times ) ) {
+			$today = $this->get_next_valid_day( $today );
+			// Reset the time options for the new day
+			$today_times = $this->get_tehran_delivery_times( true );
+		} else {
+			$today = $this->get_next_valid_day( $today );
+		}
+
+		$tomorrow = $this->get_next_valid_day( $tomorrow );
+
+		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+
+        if ( $tomorrow_shamsi === $today_shamsi ) {
+            $tomorrow = $this->get_next_valid_day( $tomorrow );
+			$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+		}
+		return [ [ $today_times ], [ $today_shamsi, $tomorrow_shamsi ] ];
+	}
+
+	private function get_next_valid_day( $date ) {
+		do {
+			$date->add( new DateInterval( 'P1D' ) );
+		} while ( $this->should_skip_day_tehran( $date ) );
+
+		return $date;
+	}
+
+	private function should_skip_day_tehran( $date ) {
+		$is_friday = $date->format( 'w' ) == 5;
+		$is_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $date->getTimestamp() ) );
+
+		return $is_friday || $is_excluded;
+	}
+
+	private function should_skip_day( $date, $hour = null ) {
+		$is_friday = $date->format( 'w' ) == 5;
+		$is_past_cutoff = isset( $hour ) && $hour >= 15;
+		$is_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $date->getTimestamp() ) );
+
+		while ( $is_excluded || $is_friday || $is_past_cutoff ) {
+			$date->add( new DateInterval( 'P1D' ) );
+			$is_friday = $date->format( 'w' ) == 5;
+			$is_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $date->getTimestamp() ) );
+			$is_past_cutoff = false;  // We only check the cutoff time for "today"
+		}
+
+		return $is_excluded || $is_friday || $is_past_cutoff;
+	}
+
+	private function is_excluded( $shamsi_day ) {
+		// Split the $today string into day and month
+		[ $day, $month ] = explode( ' ', $shamsi_day );
+
+		// Check if the month is in the $exclude_delivery_days array
+		if ( array_key_exists( $month, $this->exclude_delivery_days ) ) {
+			// If it is, check if the day is in the array of excluded days for that month
+			if ( in_array( $day, $this->exclude_delivery_days[ $month ] ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+//	private function get_out_tehran_delivery_days() {
+//		// Get current time in Tehran
+//		$tehran_time = new DateTime( 'now', new DateTimeZone( 'Asia/Tehran' ) );
+//		$hour = $tehran_time->format( 'H' );
+//
+//		$today = new DateTime();
+//		$tomorrow = new DateTime();
+//		$tomorrow->add( new DateInterval( 'P1D' ) );
+//
+//		$today_is_friday = $today->format( 'w' ) == 5;
+//		$tomorrow_is_friday = $tomorrow->format( 'w' ) == 5;
+//		$skip_tomorrow = false;
+//
+//		$skip_today = false;
+//		// If current hour is past 15 or today is Friday (Jomeh), go to next day
+//		if ( $hour >= 15 || $today_is_friday ) {
+//			$today->add( new DateInterval( 'P1D' ) );
+//			// Skip today's delivery option
+//			$skip_today = true;
+//		}
+//
+//		// If tomorrow is Friday (Jomeh), go to next day
+//		if ( $tomorrow_is_friday ) {
+//			$tomorrow->add( new DateInterval( 'P1D' ) );
+//		}
+//
+//		// Convert to Shamsi date and get day of week
+//		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+//		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+//
+//		$is_today_excluded = $this->is_excluded( $today_shamsi );
+//		while ( $is_today_excluded ) {
+//			$skip_today = true;
+//			$today->add( new DateInterval( 'P1D' ) );
+//			$is_today_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $today->getTimestamp() ) );
+//		}
+//
+//		$is_tomorrow_excluded = $this->is_excluded( $tomorrow_shamsi );
+//		while ( $is_tomorrow_excluded ) {
+//			$skip_tomorrow = true;
+//			$tomorrow->add( new DateInterval( 'P1D' ) );
+//			$is_tomorrow_excluded = $this->is_excluded( $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() ) );
+//		}
+//
+//		$today_shamsi = $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+//		$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+//
+//		// Prepare delivery options
+//		$options = [];
+//		if ( !$skip_today ) {
+//			$options[] = 'ارسال امروز - ' . $today_shamsi;
+//		}
+//
+//		if ( !$tomorrow_is_friday && !$skip_tomorrow ) {
+//			$options[] = 'ارسال فردا - ' . $tomorrow_shamsi;
+//		} else {
+//			$options[] = 'ارسال ' . $tomorrow_shamsi;
+//		}
+//
+//		return $options;
+//	}
 
 	public function display_delivery_time_in_admin( $order ) {
 		$delivery_day = get_post_meta( $order->get_id(), 'delivery_day', true );
@@ -212,11 +298,11 @@ class Delivery_Time {
 
 		$times = [];
 
-//		if ( $hour < 13 || ( $hour === 13 && $minute === 0 ) ) {
-//			$times[ '11-15' ] = '11 الی 15';
-//		}
+		if ( $hour < 10 || ( $hour === 10 && $minute === 0 ) ) {
+			$times[ '11-15' ] = '11 الی 15';
+		}
 
-		if ( $hour < 16 || ( $hour === 16 && $minute === 0 ) ) {
+		if ( $hour < 15 || ( $hour === 15 && $minute === 0 ) ) {
 			$times[ '16-20' ] = '۱۶ الی ۲۰';
 		}
 
