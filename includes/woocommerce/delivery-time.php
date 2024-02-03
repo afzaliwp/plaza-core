@@ -43,8 +43,12 @@ class Delivery_Time {
                         <select class="form-select w-100" aria-label="انتخاب روز ارسال" name="plaza-day-select"
                                 id="plaza-day-select">
 							<?php
+                            $only_afternoon = false;
 							$tehran_days = $this->get_tehran_delivery_days();
-							foreach ( $tehran_days[ 1 ] as $day ) {
+							foreach ( $tehran_days[ 1 ] as $index => $day ) {
+                                if ( str_contains( $day, 'پنجشنبه' ) ) {
+									$only_afternoon = $index;
+								}
 								echo sprintf( '<option value="%1$s">%1$s</option>', $day );
 							}
 							?>
@@ -59,9 +63,17 @@ class Delivery_Time {
 							if ( [] === $tehran_times ) {
 								$tehran_times = $tehran_days[ 0 ][ 0 ];
 							}
+
+                            $i = 0;
 							foreach ( $tehran_times as $key => $time ) {
-								echo sprintf( '<option value="%1$s">%2$s</option>', $key, $time );
-							}
+                                if ( $i === $only_afternoon ) {
+									echo '<option value="12-16">۱۲ الی ۱۶</option>';
+								} else {
+									echo sprintf( '<option value="%1$s">%2$s</option>', $key, $time );
+								}
+
+							$i ++;
+                            }
 							?>
                         </select>
                     </div>
