@@ -9,3 +9,19 @@
 		font-weight: 600;
 	}
 }
+
+aside {
+	.content-table-wrapper {
+		height: 250px;
+		overflow-y: scroll;
+		margin: 0;
+
+		.content-table-title {
+			font-size: 16px;
+		}
+
+		a {
+			font-size: 14px;
+		}
+	}
+}
