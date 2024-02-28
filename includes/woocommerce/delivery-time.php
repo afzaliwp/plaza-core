@@ -142,6 +142,12 @@ class Delivery_Time {
             $tomorrow = $this->get_next_valid_day( $tomorrow );
 			$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
 		}
+
+        if ( $tomorrow->format( 'w' ) == 5 ) {
+            $tomorrow = $this->get_next_valid_day( $tomorrow );
+			$tomorrow_shamsi = $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+		}
+
 		return [ [ $today_times ], [ $today_shamsi, $tomorrow_shamsi ] ];
 	}
 

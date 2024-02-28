@@ -6,4 +6,17 @@
             }
         }
     }
+
+    .send-sms-to-user-meta-box {
+        position: relative;
+
+        &.loading {
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0 0 0 0;
+                background-color: rgba(99, 99, 99, 0.62);
+            }
+        }
+    }
 }

@@ -16,6 +16,7 @@ use AfzaliWP\PlazaDigital\Includes\SEO\Schema;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Admin_Edit;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Shipping_Price;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
 use Exception;
@@ -151,11 +152,23 @@ final class PlazaDigital {
 			AFZALIWP_PD_ASSETS_VERSION,
 			true
 		);
+
+		wp_localize_script(
+			'afzaliwp-pd-admin-script',
+			'PlazaObj',
+			[
+				'homeUrl' => get_bloginfo( 'url' ),
+				// 'checkoutUrl' => wc_get_checkout_url(), //If WooCommerce is included in your works and need to use checkout url in ajax.
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'afzaliwp-pd-nonce' ),
+			]
+		);
 	}
 
 	public function woocommerce_related() {
 		new Delivery_Time();
 		new Tracking_Code();
+		new Admin_Edit();
 	}
 
 	public function define_constants() {
