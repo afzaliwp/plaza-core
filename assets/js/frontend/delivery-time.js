@@ -22,9 +22,6 @@ class DeliveryTime {
 	originalTimeOptions = null;
 
 	constructor() {
-		// this.elements.billingCity.addEventListener( 'keydown', this.handleBillingCityChange.bind( this ) );
-		// this.elements.billingCity.addEventListener( 'keyup', this.handleBillingCityChange.bind( this ) );
-		// this.elements.billingCity.addEventListener( 'blur', this.handleBillingCityChange.bind( this ) );
 		$(this.elements.billingCity).on('change', this.handleBillingCityChange .bind( this ));
 		this.elements.placeOrderButton.addEventListener( 'click', this.handlePlaceOrderClick.bind( this ) );
 		this.elements.daySelect.addEventListener( 'change', this.handleDaySelectChange.bind( this ) );
@@ -55,7 +52,11 @@ class DeliveryTime {
 
 		const cityName = selectedOption.text;
 
-		if ( cityName === 'تهران' ) {
+		if (
+			this.elements.tehranContainer
+			&& this.elements.outOfTehranContainer
+			&& cityName === 'تهران'
+		) {
 			this.elements.tehranContainer.classList.add( 'show' );
 			this.elements.outOfTehranContainer.classList.remove( 'show' );
 		} else {

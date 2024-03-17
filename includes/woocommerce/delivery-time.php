@@ -119,11 +119,11 @@ class Delivery_Time {
 
 		$options = [];
 		if ( !$skip_today ) {
-			$options[] = 'ارسال امروز - ' . $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
+			$options[] = 'ارسال - ' . $this->jdate->jdate( 'j F - l', $today->getTimestamp() );
 		}
 
 		if ( !$skip_tomorrow ) {
-			$options[] = 'ارسال فردا - ' . $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
+			$options[] = 'ارسال - ' . $this->jdate->jdate( 'j F - l', $tomorrow->getTimestamp() );
 		}
 
 		return $options;

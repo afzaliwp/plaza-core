@@ -5,7 +5,25 @@ namespace AfzaliWP\PlazaDigital\Includes\Helper;
 
 defined( 'ABSPATH' ) || die();
 
-// This class use jdate functions for covert date
+/**
+Gregorian & Jalali (Hijri_Shamsi,Solar) Date Converter
+Author: JDF.SCR.IR =>> Download Full Version :  http://jdf.scr.ir/jdf
+License: GNU/LGPL _ Open Source & Free :: Version: 2.80 : [2020=1399]
+---------------------------------------------------------------------
+ * 355746=361590-5844
+ * 361590=(30*33*365)+(30*8)
+ * 5844=(16*365)+(16/4)
+ * 355666=355746-79-1
+ * 355668=355746-79+1
+ * 1595=605+990
+ * 605=621-16
+ * 990=30*33
+ * 12053=(365*33)+(32/4)
+ * 36524=(365*100)+(100/4)-(100/100)
+ * 1461=(365*4)+(4/4)
+ * 146097=(365*400)+(400/4)-(400/100)+(400/400)
+ */
+
 class Jalali_Date {
 
 	/*
