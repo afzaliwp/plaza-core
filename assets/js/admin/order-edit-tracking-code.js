@@ -1,6 +1,6 @@
 const $ = jQuery;
 
-class OrderEdit {
+class OrderEditTrackingCode {
 
 	selectors = {
 		smsFormWrapper: '.send-sms-to-user-meta-box',
@@ -72,5 +72,5 @@ class OrderEdit {
 }
 
 window.addEventListener( 'load', () => {
-	new OrderEdit();
+	new OrderEditTrackingCode();
 } );

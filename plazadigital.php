@@ -17,6 +17,7 @@ use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Delivery_Time;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Admin_Edit;
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Order_Preview;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Shipping_Price;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
 use Exception;
@@ -168,6 +169,7 @@ final class PlazaDigital {
 	public function woocommerce_related() {
 		new Delivery_Time();
 		new Tracking_Code();
+		new Order_Preview();
 		new Admin_Edit();
 	}
 
