@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           2.1.1
+ * Version:           2.1.2
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
@@ -167,7 +167,6 @@ final class PlazaDigital {
 	}
 
 	public function woocommerce_related() {
-		new Delivery_Time();
 		new Tracking_Code();
 		new Order_Preview();
 		new Admin_Edit();
@@ -189,7 +188,7 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.1' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.2' );
 		}
 	}
 
