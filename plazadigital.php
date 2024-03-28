@@ -14,6 +14,7 @@ use AfzaliWP\PlazaDigital\Includes\Redirects;
 use AfzaliWP\PlazaDigital\Includes\SEO\Canonical;
 use AfzaliWP\PlazaDigital\Includes\SEO\Schema;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Goftino;
+use AfzaliWP\PlazaDigital\Includes\Third_Parties\Gravity_Forms;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Admin_Edit;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Order_Preview;
@@ -56,7 +57,7 @@ final class PlazaDigital {
 	public static function get_instance() {
 		$cls = PlazaDigital::class;
 
-		if ( ! isset( self::$instances[ $cls ] ) ) {
+		if ( !isset( self::$instances[ $cls ] ) ) {
 			self::$instances[ $cls ] = new PlazaDigital();
 		}
 
@@ -132,7 +133,7 @@ final class PlazaDigital {
 				'homeUrl' => get_bloginfo( 'url' ),
 				// 'checkoutUrl' => wc_get_checkout_url(), //If WooCommerce is included in your works and need to use checkout url in ajax.
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'afzaliwp-pd-nonce' ),
+				'nonce' => wp_create_nonce( 'afzaliwp-pd-nonce' ),
 			]
 		);
 	}
@@ -160,7 +161,7 @@ final class PlazaDigital {
 				'homeUrl' => get_bloginfo( 'url' ),
 				// 'checkoutUrl' => wc_get_checkout_url(), //If WooCommerce is included in your works and need to use checkout url in ajax.
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'afzaliwp-pd-nonce' ),
+				'nonce' => wp_create_nonce( 'afzaliwp-pd-nonce' ),
 			]
 		);
 	}
@@ -198,6 +199,10 @@ final class PlazaDigital {
 	}
 
 	public function other_functionalities() {
+		add_action( 'after_setup_theme', function () {
+			new Gravity_Forms();
+		} );
+
 		new Goftino();
 		new Schema();
 		new Canonical();
