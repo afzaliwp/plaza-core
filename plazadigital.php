@@ -203,7 +203,6 @@ final class PlazaDigital {
 			new Gravity_Forms();
 		} );
 
-		new Goftino();
 		new Schema();
 		new Canonical();
 	}
