@@ -6,7 +6,8 @@ defined( 'ABSPATH' ) || die();
 
 class Checkout {
 	public function __construct() {
-		add_action( 'woocommerce_thankyou', [ $this, 'handle_plaza_suggests' ], 10, 1 );
+		add_action( 'woocommerce_checkout_update_order_meta', [ $this, 'handle_plaza_suggests' ], 10, 1 );
+		add_action( 'woocommerce_cart_calculate_fees', [ $this, 'add_extra_fee' ] );
 	}
 
 	public function handle_plaza_suggests( $order_id ) {
@@ -39,5 +40,21 @@ class Checkout {
 
 		unset( $_COOKIE[ 'plazaSuggests' ] );
 		setcookie( 'plazaSuggests', '', time() - 3600, '/' );
+	}
+
+	public function add_extra_fee() {
+		if ( !isset( $_COOKIE[ 'plazaSuggests' ] ) ) {
+			return;
+		}
+
+		$plaza_suggest = json_decode( stripslashes( $_COOKIE[ 'plazaSuggests' ] ), ARRAY_A );
+
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			$product_id = $cart_item[ 'product_id' ];
+
+			if ( isset( $plaza_suggest[ $product_id ] ) && in_array( 'فعال‌سازی سنسورهای اکسیژن خون و ECG', $plaza_suggest[ $product_id ][ 'description' ] ) ) {
+				WC()->cart->add_fee( 'فعال‌سازی ECG ساعت هوشمند ' . $product_id, 2500000 );
+			}
+		}
 	}
 }
