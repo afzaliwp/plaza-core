@@ -7,6 +7,18 @@
         }
     }
 
+    .wc-backbone-modal.wc-order-preview {
+        .wc-action-button {
+            display: none;
+        }
+
+        .wc-action-button-anbar,
+        .wc-action-button-etebar,
+        .wc-action-button-taeed {
+            display: inline-block !important;
+        }
+    }
+
     .send-sms-to-user-meta-box {
         position: relative;
 

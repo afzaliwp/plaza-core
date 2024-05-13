@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           2.1.6
+ * Version:           2.1.7
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
@@ -91,7 +91,7 @@ final class PlazaDigital {
 	public function admin_menus() {
 		/**
 		 * TODO: You can add admin menus and option pages here.
-		 * Hint: Call this method in constructure.
+		 * Hint: Call this method in constructor.
 		 */
 		add_options_page(
 			esc_html__( 'Admin menu Title', 'afzaliwp-pd' ),
@@ -187,7 +187,7 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.6' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.7' );
 		}
 	}
 
