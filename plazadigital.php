@@ -12,6 +12,7 @@ namespace AfzaliWP;
 
 use AfzaliWP\PlazaDigital\Includes\Redirects;
 use AfzaliWP\PlazaDigital\Includes\SEO\Canonical;
+use AfzaliWP\PlazaDigital\Includes\SEO\No_Index;
 use AfzaliWP\PlazaDigital\Includes\SEO\Schema;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Gravity_Forms;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
@@ -204,6 +205,7 @@ final class PlazaDigital {
 		new Checkout();
 		new Schema();
 		new Canonical();
+		new No_Index();
 	}
 }
 
