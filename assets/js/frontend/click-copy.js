@@ -53,7 +53,7 @@ class ClickCopy {
 		setTimeout(() => {
 			tooltip.classList.remove('show');
 			setTimeout(() => {
-				document.body.removeChild(tooltip);
+				tooltip.remove();
 			}, 500);
 		}, 1000);
 	}
