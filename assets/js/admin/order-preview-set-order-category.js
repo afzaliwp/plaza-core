@@ -30,9 +30,7 @@ class OrderPreviewRefundInfo {
                 this.elements.categoriesSelectField = form.querySelector(this.selectors.categoriesSelectField);
                 this.elements.result = form.querySelector(this.selectors.result);
                 this.elements.submitButton = form.querySelector(this.selectors.submitButton);
-                const orderId = form.querySelector(this.selectors.orderId).value;
-
-                event.preventDefault();
+                const orderId = window.currentOrderPreviewId;
                 this.elements.submitButton.disabled = true;
                 this.elements.submitButton.textContent = 'در حال ارسال';
 
@@ -43,6 +41,7 @@ class OrderPreviewRefundInfo {
 
     setCategory(orderId, category) {
         const self = this;
+        console.log(orderId,category)
         $.ajax({
             url: PlazaObj.ajaxUrl,
             type: 'POST',

@@ -27,7 +27,8 @@ class Order_Preview {
 		add_action( 'wp_ajax_plaza_admin_send_zpal_link_sms', [ $this, 'handle_zpal_link_sms_delivery' ] );
 		add_action( 'wp_ajax_plaza_admin_send_refund_info_sms', [ $this, 'handle_refund_info_sms_delivery' ] );
 		add_action( 'wp_ajax_plaza_admin_set_order_category', [ $this, 'handle_order_category' ] );
-		add_action( 'woocommerce_admin_order_preview_start', [ $this, 'order_preview_data' ] );
+		add_action( 'woocommerce_admin_order_preview_start', [ $this, 'order_preview_data_start' ] );
+		add_action( 'wp_ajax_plaza_admin_order_preview_data', [ $this, 'order_preview_data' ] );
 	}
 
 	public function handle_zpal_link_sms_delivery() {
@@ -61,7 +62,8 @@ class Order_Preview {
 	public function handle_order_category() {
         $res = update_post_meta( $_POST[ 'post_id' ], 'plaza-order-category', $_POST['category'] );
 
-        if ( is_int( $res ) ) {
+        write_log($res);
+        if ( $res ) {
 			wp_send_json_success( 'با موفقیت ثبت شد.' );
         } else {
 			wp_send_json_success( 'خطایی رخ داده است. ثبت نشد.' );
@@ -69,14 +71,22 @@ class Order_Preview {
 
 	}
 
+	public function order_preview_data_start() {
+		?>
+        <div class="extra-order-preview-data-start">
+           درحال بارگیری امکانات اضافه...
+        </div>
+		<?php
+	}
+    
 	public function order_preview_data() {
-		global $post;
-
+        $order_id = $_POST['post_id'];
+        ob_start();
 		?>
         <div class="send-zpal-link-order-preview">
             <h4>جهت ارسال پیامک لینک زرین پال برای پرداخت بیعانه، روی دکمه زیر کلیک کنید.</h4>
             <button
-                    data-order-id="<?php echo $post->ID; ?>"
+                    data-order-id="<?php echo $order_id; ?>"
                     class="button button-primary send-zpal-link-button">
                 ارسال پیامک لینک زرین پال
             </button>
@@ -86,7 +96,7 @@ class Order_Preview {
         <div class="send-refund-info-order-preview">
             <h4>جهت ارسال پیامک درخواست تکمیل فرم عودت وجه، روی دکمه زیر کلیک کنید.</h4>
             <button
-                    data-order-id="<?php echo $post->ID; ?>"
+                    data-order-id="<?php echo $order_id; ?>"
                     class="button button-primary send-refund-info-button">
                 ارسال پیامک تکمیل فرم عودت وجه
             </button>
@@ -95,11 +105,11 @@ class Order_Preview {
         </div>
 
         <div class="set-order-category-preview">
-			<?php $current_category = get_post_meta( $post->ID, 'plaza-order-category', true ); ?>
+			<?php $current_category = get_post_meta( $order_id, 'plaza-order-category', true ); ?>
             <h4>دسته‌بندی این سفارش را انتخاب کنید.</h4>
             <h4>دسته‌بندی فعلی:
 				<?php
-                echo $current_category ? $current_category : 'انتخاب نشده است';
+                echo $current_category ?: 'انتخاب نشده است';
                 ?>
             </h4>
             <form action="" method="post" id="plaza-set-order-categories-form">
@@ -113,7 +123,7 @@ class Order_Preview {
 					<? } ?>
                 </select>
                 <input type="hidden" id="order-categories-order-id" name="order-categories-order-id"
-                       value="<?php echo $post->ID; ?>">
+                       value="<?php echo $order_id; ?>">
                 <button id="plaza-order-categories-submit" type="submit" class="button button-primary primary">
                     ثبت دسته
                 </button>
@@ -121,5 +131,7 @@ class Order_Preview {
             </form>
         </div>
 		<?php
+
+        wp_send_json_success( ob_get_clean() );
 	}
 }

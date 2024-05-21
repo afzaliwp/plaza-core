@@ -29,7 +29,7 @@ class OrderPreviewRefundInfo {
 				button.textContent = 'در حال ارسال';
 				this.elements.sendButton = button;
 
-				const orderId = button.dataset.orderId;
+				const orderId = window.currentOrderPreviewId;
 				this.sendSms( orderId );
 			}
 		});
