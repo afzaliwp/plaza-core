@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           2.1.8
+ * Version:           2.1.9
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
@@ -17,6 +17,7 @@ use AfzaliWP\PlazaDigital\Includes\SEO\Schema;
 use AfzaliWP\PlazaDigital\Includes\Third_Parties\Gravity_Forms;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Checkout;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Admin_Edit;
+use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Order_List;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders\Order_Preview;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Shipping_Price;
 use AfzaliWP\PlazaDigital\Includes\WooCommerce\Tracking_Code;
@@ -169,6 +170,7 @@ final class PlazaDigital {
 	public function woocommerce_related() {
 		new Tracking_Code();
 		new Order_Preview();
+		new Order_List();
 		new Admin_Edit();
 	}
 
@@ -188,7 +190,7 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.8' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.1.9' );
 		}
 	}
 

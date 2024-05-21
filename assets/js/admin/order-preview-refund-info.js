@@ -38,7 +38,7 @@ class OrderPreviewRefundInfo {
 	sendSms( orderId ) {
 		const self = this;
 		$.ajax( {
-			url: PlazaObj.ajaxUrl, // Replace with the actual URL of your AJAX handler
+			url: PlazaObj.ajaxUrl,
 			type: 'POST',
 			data: {
 				action: 'plaza_admin_send_refund_info_sms',

@@ -47,7 +47,7 @@ class OrderEditTrackingCode {
 		console.log( data )
 		const self = this;
 		$.ajax( {
-			url: PlazaObj.ajaxUrl, // Replace with the actual URL of your AJAX handler
+			url: PlazaObj.ajaxUrl,
 			type: 'POST',
 			data: {
 				action: 'plaza_admin_send_sms',
