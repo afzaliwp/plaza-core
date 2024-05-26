@@ -62,7 +62,6 @@ class Order_Preview {
 	public function handle_order_category() {
         $res = update_post_meta( $_POST[ 'post_id' ], 'plaza-order-category', $_POST['category'] );
 
-        write_log($res);
         if ( $res ) {
 			wp_send_json_success( 'با موفقیت ثبت شد.' );
         } else {
