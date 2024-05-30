@@ -11,6 +11,9 @@ class Gravity_Forms {
 	public $modifiable_form_ids = [];
 
 	public function __construct() {
+		if ( ! class_exists('AfzaliWP\Plaza_Theme\Includes\Helper') ) {
+			return;
+		}
 		add_action( 'admin_notices', [ $this, 'order_edit_page_notice' ] );
 		add_action( 'woocommerce_admin_order_preview_start', [ $this, 'order_preview_data' ] );
 
