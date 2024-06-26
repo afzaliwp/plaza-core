@@ -28,7 +28,13 @@ class Shipping_Price {
 
 		foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
 			$_product = $values[ 'data' ];
-			$terms = get_the_terms( $_product->get_id(), 'product_cat' );
+			$product_id = $_product->get_id();
+
+			if ( 'variation' === $_product->get_type() ) {
+				$product_id = $_product->get_parent_id();
+			}
+
+			$terms = get_the_terms( $product_id, 'product_cat' );
 
 			if ( $terms ) {
 				foreach ( $terms as $term ) {
@@ -50,6 +56,7 @@ class Shipping_Price {
 			return $rates;
 		}
 
+		mylog($cart_product_categories, '$cart_product_categories');
 		if (
 			in_array( 'monitor', $cart_product_categories ) ||
 			in_array( 'all-in-one', $cart_product_categories ) ||
