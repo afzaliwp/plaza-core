@@ -56,7 +56,6 @@ class Shipping_Price {
 			return $rates;
 		}
 
-		mylog($cart_product_categories, '$cart_product_categories');
 		if (
 			in_array( 'monitor', $cart_product_categories ) ||
 			in_array( 'all-in-one', $cart_product_categories ) ||
