@@ -52,7 +52,7 @@ class Shipping_Price {
 		}
 
 		if ( in_array( 'assembled-cases', $cart_product_categories ) ) {
-			$rates[ 'flat_rate:24' ]->set_cost( 180000 );
+			$rates[ 'flat_rate:24' ]->set_cost( 250000 );
 			return $rates;
 		}
 
