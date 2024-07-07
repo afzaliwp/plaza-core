@@ -3,7 +3,7 @@
  * Plugin Name:       PlazaDigital Core
  * Plugin URI:        https://afzaliwp.com
  * Description:       Adds more functionality to the plaza digital website.
- * Version:           2.2.1
+ * Version:           2.2.2
  * Author:            Mohammad Afzali
  * Author URI:        https://afzaliwp.com
  */
@@ -63,52 +63,6 @@ final class PlazaDigital {
 		}
 
 		return self::$instances[ $cls ];
-	}
-
-	public function activation() {
-		/**
-		 * TODO: Cron jobs can be setup here like the commented example.
-		 */
-		// if ( ! wp_next_scheduled( 'afzaliwp_bp_schedule_event' ) ) {
-		// 	wp_schedule_event( strtotime( date( 'Y-m-d 01:00:00' ) ), 'daily', 'afzaliwp_bp_schedule_event' );
-		// }
-
-		/**
-		 * TODO: Make sure changing text domain to what is appropriate for your plugin.
-		 */
-		load_plugin_textdomain(
-			'afzaliwp-pd',
-			false,
-			AFZALIWP_PD_LANGUAGES
-		);
-	}
-
-	public function deactivation() {
-		/**
-		 * TODO: Make sure you clear the scheduled events when plugin is deactivated.
-		 */
-		// wp_clear_scheduled_hook( 'afzaliwp_bp_schedule_event' );
-	}
-
-	public function admin_menus() {
-		/**
-		 * TODO: You can add admin menus and option pages here.
-		 * Hint: Call this method in constructor.
-		 */
-		add_options_page(
-			esc_html__( 'Admin menu Title', 'afzaliwp-pd' ),
-			esc_html__( 'Admin menu Title', 'afzaliwp-pd' ),
-			'manage_options',
-			'afzaliwp_bp',
-			[ $this, 'option_page_callback' ]
-		);
-	}
-
-	public function option_page_callback() {
-		/**
-		 * TODO: Create a class for you option page and call the method that is responsible for the html of the option or menu page.
-		 */
-		// Option_Page::render_page();
 	}
 
 	public function register_styles_and_scripts() {
@@ -190,7 +144,7 @@ final class PlazaDigital {
 			define( 'AFZALIWP_PD_ASSETS_VERSION', time() );
 		} else {
 			define( 'AFZALIWP_PD_IS_LOCAL', false );
-			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.2.1' );
+			define( 'AFZALIWP_PD_ASSETS_VERSION', '2.2.2' );
 		}
 	}
 

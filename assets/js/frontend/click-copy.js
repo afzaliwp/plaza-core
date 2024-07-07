@@ -28,14 +28,11 @@ class ClickCopy {
 					textToCopy = item.innerText;
 				}
 
-				const tempTextArea = document.createElement('textarea');
-				tempTextArea.value = textToCopy;
-				document.body.appendChild(tempTextArea);
-				tempTextArea.select();
-				document.execCommand('copy');
-				document.body.removeChild(tempTextArea);
-
-				this.showTooltip(item);
+				navigator.clipboard.writeText(textToCopy).then(() => {
+					this.showTooltip(item);
+				}).catch(err => {
+					console.error('Could not copy text: ', err);
+				});
 			});
 		});
 	}
