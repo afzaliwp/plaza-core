@@ -3,6 +3,7 @@
 namespace AfzaliWP\PlazaDigital\Includes\WooCommerce\Orders;
 
 use AfzaliWP\PlazaDigital\Includes\SMS\KaveNegar;
+use AfzaliWP\PlazaDigital\Includes\SMS\MeliPayamak;
 
 defined( 'ABSPATH' ) || die();
 
@@ -35,9 +36,14 @@ class Order_Preview {
 		$order = wc_get_order( $_POST[ 'post_id' ] );
 		$phone_number = $order->get_billing_phone();
 
+
+		$sms      = new MeliPayamak();
+		$response = $sms->send_sms( $phone_number, '222526', [
+			$_POST[ 'post_id' ],
+		] );
 		// Send SMS
-		$sms = new KaveNegar();
-		$response = $sms->lookup( $phone_number, $this->pattern[ 'zpal_link' ], $_POST[ 'post_id' ] );
+//		$sms = new KaveNegar();
+//		$response = $sms->lookup( $phone_number, $this->pattern[ 'zpal_link' ], $_POST[ 'post_id' ] );
 		$sms_status = $response[ 'status' ] ? 'SMS sent successfully: ' . $response[ 'message' ] : 'Failed to send SMS: ' . $response[ 'message' ];
 
 		$sms_status .= ' - ' . date( 'Y-m-d H:i:s' ); // Append the current date and time
@@ -49,9 +55,14 @@ class Order_Preview {
 		$order = wc_get_order( $_POST[ 'post_id' ] );
 		$phone_number = $order->get_billing_phone();
 
+		$sms      = new MeliPayamak();
+		$response = $sms->send_sms( $phone_number, '222523', [
+			$_POST[ 'post_id' ],
+		] );
+
 		// Send SMS
-		$sms = new KaveNegar();
-		$response = $sms->lookup( $phone_number, $this->pattern[ 'refund_info' ], $_POST[ 'post_id' ] );
+//		$sms = new KaveNegar();
+//		$response = $sms->lookup( $phone_number, $this->pattern[ 'refund_info' ], $_POST[ 'post_id' ] );
 		$sms_status = $response[ 'status' ] ? 'SMS sent successfully: ' . $response[ 'message' ] : 'Failed to send SMS: ' . $response[ 'message' ];
 
 		$sms_status .= ' - ' . date( 'Y-m-d H:i:s' ); // Append the current date and time

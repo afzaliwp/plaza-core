@@ -17,7 +17,7 @@ class MeliPayamak {
 
 	public function send_sms( $phone, $body_id, $args = [] ) {
 		$data        = [
-			'bodyId' => $body_id,
+			'bodyId' => (int) $body_id,
 			'to'     => $phone,
 			'args'   => $args
 		];
@@ -27,7 +27,8 @@ class MeliPayamak {
 			'method'    => 'POST',
 			'headers'   => [ 'Content-Type' => 'application/json' ],
 			'body'      => $data_string,
-			'sslverify' => false  // This makes the request insecure, similar to your original code
+			'sslverify' => false,
+			'timeout'   => 30,
 		] );
 
 		if ( is_wp_error( $request ) ) {
@@ -39,8 +40,8 @@ class MeliPayamak {
 		$request = json_decode( wp_remote_retrieve_body( $request ) );
 
 		return [
-			'status'  => $request->return->status == 200,
-			'message' => 'پنل پیامک: ' . $request->return->message
+			'status'  => $request->status === 'ارسال موفق بود',
+			'message' => 'پنل پیامک: ' . $request->status
 		];
 	}
 }
