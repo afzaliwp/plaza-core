@@ -19,6 +19,10 @@ class OrderEditTrackingCode {
 	}
 
 	handleSendSms() {
+		if ( !this.elements.smsFormWrapper ) {
+			return;
+		}
+
 		this.elements.smsFormWrapper.classList.remove('loading');
 		this.elements.sendButton.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
